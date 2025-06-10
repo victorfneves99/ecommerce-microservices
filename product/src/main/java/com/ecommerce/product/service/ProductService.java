@@ -63,7 +63,6 @@ public class ProductService {
     private ProductResponse mapToProductResponse(Product save) {
 
         var productResponse = new ProductResponse();
-        productResponse.setId(save.getId());
         productResponse.setName(save.getName());
         productResponse.setDescription(save.getDescription());
         productResponse.setQuantity(save.getQuantity());

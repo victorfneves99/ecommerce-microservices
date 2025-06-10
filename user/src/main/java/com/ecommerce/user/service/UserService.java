@@ -13,7 +13,6 @@ import com.ecommerce.user.model.Address;
 import com.ecommerce.user.model.User;
 import com.ecommerce.user.repository.UserRepository;
 
-
 @Service
 public class UserService {
 
@@ -32,21 +31,21 @@ public class UserService {
     }
 
     public User addUser(UserRequest userRequest) {
-        return userRepository.save(updateUserFromRequest(userRequest,null));
+        return userRepository.save(updateUserFromRequest(userRequest, null));
     }
 
-    public Optional<UserResponse> fetchUser(Long id) {
+    public Optional<UserResponse> fetchUser(String id) {
         return userRepository.findById(id).map(user -> convertUserToUserResponse(user));
     }
 
-    public boolean updateUser(Long id,UserRequest updateUserRequest) {
+    public boolean updateUser(String id, UserRequest updateUserRequest) {
         return userRepository.findById(id)
-        .map(existingUser -> {
-            User updatedUser = updateUserFromRequest(updateUserRequest,existingUser);
-            userRepository.save(updatedUser);
-            return true;
-        }).orElse(false);
-       
+                .map(existingUser -> {
+                    User updatedUser = updateUserFromRequest(updateUserRequest, existingUser);
+                    userRepository.save(updatedUser);
+                    return true;
+                }).orElse(false);
+
     }
 
     private UserResponse convertUserToUserResponse(User user) {
@@ -63,7 +62,6 @@ public class UserService {
         return new UserResponse(String.valueOf(user.getId()), user.getFirstName(), user.getLastName(), user.getEmail(),
                 user.getPhone(), user.getRole(), address);
     }
-
 
     private User updateUserFromRequest(UserRequest userRequest, @Nullable User existingUser) {
         User user = existingUser != null ? existingUser : new User();
